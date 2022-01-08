@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CRM.Areas.Identity.Data;
 using CRM.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +19,85 @@ namespace CRM.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UserRolesController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+
+        public UserRolesController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
-      
-        public async Task<IActionResult> Index()
+        //Logout
+        public async Task<IActionResult> Logout()
+        {
+            var returnUrl = Url.Action("Index","Home");
+            await _signInManager.SignOutAsync();
+                return LocalRedirect(returnUrl);
+        }
+        //Edit USer
+        public  ActionResult EditUser()
+        {
+            // Get Current Userid
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var users =  _userManager.Users.Where(x=>x.Id == userId).FirstOrDefault();
+            ViewData["Title"] = "Edit Profile";
+            return View(users); 
+        }
+        [HttpPost]
+        public async Task<ActionResult> EditUserAsync(ApplicationUser applicationUser)
+        {
+            // Get Current Userid
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var users = _userManager.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (Request.Form.Files.Count > 0)
+            {
+                IFormFile file = Request.Form.Files.FirstOrDefault();
+                using (var dataStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(dataStream);
+                    applicationUser.ProfilePicture = dataStream.ToArray();
+                }
+            }
+            else
+            {
+                var img_path = "~/Admin Template/dist/img/avatar.png";
+                using (Image image = Image.FromFile(img_path))
+                {
+                    using (MemoryStream m = new MemoryStream())
+                    {
+                        image.Save(m, image.RawFormat);
+                        byte[] imageBytes = m.ToArray();
+                        applicationUser.ProfilePicture = imageBytes;
+                    }
+                }
+            }
+            ApplicationUser userdata = await _userManager.FindByIdAsync(userId);
+            userdata.UserName = applicationUser.UserName;
+            userdata.FirstName = applicationUser.FirstName;
+            userdata.LastName = applicationUser.LastName;
+            userdata.ProfilePicture = applicationUser.ProfilePicture;
+            userdata.Email = applicationUser.Email;
+            var result = await _userManager.UpdateAsync(userdata);
+            return View(userdata);  
+        }
+        // Change Password
+        public ActionResult ChangePassword()
+        { 
+            return View();
+        }
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(ApplicationUser applicationUser)
+        { 
+            // Get Current Userid
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var users = _userManager.Users.Where(x => x.Id == userId).FirstOrDefault();
+            ApplicationUser userdata = await _userManager.FindByIdAsync(userId);
+            userdata.PasswordHash = applicationUser.PasswordHash;
+            var result = await _userManager.UpdateAsync(userdata); 
+            return View(userdata); 
+        }
+        public async Task<IActionResult> Index() 
         {
             var users = await _userManager.Users.ToListAsync();
             var userRolesViewModel = new List<RoleAsignToUser>();
