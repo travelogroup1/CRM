@@ -16,12 +16,7 @@ namespace CRM.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<CRMContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("CRMContextConnection")));
 
-                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<CRMContext>();
             });
         }
     }

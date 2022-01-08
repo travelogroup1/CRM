@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using System.Net.Mail;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Drawing;
 
 namespace CRM.Areas.Identity.Pages.Account
 {
@@ -106,6 +107,19 @@ namespace CRM.Areas.Identity.Pages.Account
                     {
                         await file.CopyToAsync(dataStream);
                         user.ProfilePicture = dataStream.ToArray();
+                    }
+                }
+                else
+                {
+                    var img_path = "~/Admin Template/dist/img/avatar.png";
+                    using (Image image = Image.FromFile(img_path))
+                    {
+                        using (MemoryStream m = new MemoryStream())
+                        {
+                            image.Save(m, image.RawFormat);
+                            byte[] imageBytes = m.ToArray();
+                            user.ProfilePicture = imageBytes;
+                        }
                     }
                 }
                 var result = await _userManager.CreateAsync(user, Input.Password);

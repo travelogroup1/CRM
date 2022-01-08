@@ -129,7 +129,7 @@ namespace CRM.Controllers
                     var r = await _rolemanger.AddClaimAsync(Role, c);
                 }
             }
-            return RedirectToAction("GetAllClaims", new { roleid = model.RoleId });
+            return RedirectToAction("RoleList", "Account");
         }
 
         #endregion
