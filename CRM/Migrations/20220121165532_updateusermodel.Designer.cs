@@ -4,14 +4,16 @@ using CRM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRM.Migrations
 {
     [DbContext(typeof(CRMContext))]
-    partial class CRMContextModelSnapshot : ModelSnapshot
+    [Migration("20220121165532_updateusermodel")]
+    partial class updateusermodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,18 +21,12 @@ namespace CRM.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CRM.Model.CRMModel.Branch", b =>
+            modelBuilder.Entity("CRM.Models.CRMModel.Branch", b =>
                 {
                     b.Property<int>("BranchId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Added_By")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Added_Date")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BranchAddress")
                         .HasColumnType("nvarchar(max)");
@@ -45,12 +41,6 @@ namespace CRM.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BranchName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Modified_By")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Modified_Date")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BranchId");

@@ -1,6 +1,7 @@
 using CRM.Areas.Identity.Data;
 using CRM.Data;
 using CRM.Models;
+using CRM.Utility;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +42,11 @@ namespace CRM
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequiredPolicy", policy =>policy.RequireClaim("canadduser", "canadduser"));
+            });
+            // Ajax Setting
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
         }
 

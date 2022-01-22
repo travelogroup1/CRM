@@ -1,0 +1,213 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Branch Info</h3>
+                <div class="card-tools">
+                    <h6 class="text-success" id="msg" style="display:none">Successfully save changes.</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Branch Name&nbsp;<span style="color:red!important"><b>*</b></span></label>
+                            <input type="hidden" class="form-control" id="BranchId" name="BranchId" />
+                            <input type="hidden" class="form-control" id="Added_By" name="Added_By" />
+                            <input type="hidden" class="form-control" id="Added_Date" name="Added_Date" />
+                            <input type="text" class="form-control" id="BranchName" name="BranchName" tabindex="1" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Branch Address&nbsp;<span style="color:red!important"><b>*</b></span></label>
+                            <input type="text" class="form-control" id="BranchAddress" name="BranchAddress" required tabindex="3" />
+                        </div>
+                        <div class="form-group">
+                            <label>Branch City&nbsp;<span style="color:red!important"><b>*</b></span></label>
+                            <input type="text" class="form-control" id="BranchCity" name="BranchCity" required tabindex="5" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Branch Code&nbsp;<span style="color:red!important"><b>*</b></span></label>
+                            <input type="number" class="form-control" id="BranchCode" name="BranchCode" required tabindex="2" />
+                        </div>
+                        <div class="form-group">
+                            <label>Branch Contact No&nbsp;<span style="color:red!important"><b>*</b></span></label>
+                            <input type="number" class="form-control" id="BranchContactNo" name="BranchContactNo"  required tabindex="4" />
+                        </div>
+                        <div class="form-group" style="padding-top: 22px;">
+                            <label></label>
+                            <button class="btn btn-success mt-2" id="addupbtn" onclick="CheckValidation();" tabindex="6">Add Branch</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">All Branch List</h3>
+                    </div>
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Branch Name</th>
+                                    <th>Branch Code</th>
+                                    <th>Branch Address</th>
+                                    <th>Branch City</th>
+                                    <th>Branch Contact #</th>
+                                    <th>Added By</th>
+                                    <th>Added Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="branchtbl"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>$(function () {
+        GetBranchList();
+        window.alert = function () {  }
+    });
+    function GetBranchList()
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/Setting/GetBranch',
+            success: function (response) {
+                var op = '';
+                $.each(response, function (key, item) {
+                    op += '<tr><td>' + item.BranchId + '</td><td>' + item.BranchName + '</td><td>' + item.BranchCode + '</td><td>' + item.BranchAddress + '</td><td>' + item.BranchCity + '</td><td>' + item.BranchContactNo + '</td><td>' + item.Added_By + '</td><td> ' + item.Added_Date + '</td >';
+                    op += '<td><a href="javascript:;"  class="btn btn-info mt-2" onclick="EditBranch(\'' + item.BranchId + '\',\'' + item.BranchName + '\',\'' + item.BranchCode + '\',\'' + item.BranchAddress + '\',\'' + item.BranchCity + '\',\'' + item.BranchContactNo + '\',\'' + item.Added_By + '\',\'' + item.Added_Date + '\')">Edit</a><a href="javascript:;" onclick="delbranch(\'' + item.BranchId + '\')" class="btn btn-danger mt-2">Delete</a></td></tr>';
+                });
+                $('#branchtbl').empty().append(op);
+                Datatables();
+            },
+            failure: function (response) {
+                $('#result').html(response);
+            }
+        });
+    }
+    function CheckValidation()
+    {
+        if ($('#BranchName').val() == "" || $('#BranchCode').val() == "" || $('#BranchAddress').val() == "" || $('#BranchCity').val() == "" || $('#BranchContactNo').val() == "")
+            {
+                toastr.error('Required Fields are Mandatory...!')
+            }
+            else {
+                AddBranch();
+            }
+    }
+    function AddBranch() 
+    {
+            var btn_name = $('#addupbtn').text();
+        if (btn_name == "Update")
+        {
+            var BranchId = $('#BranchId').val();
+            var BranchName = $('#BranchName').val();
+            var BranchAddress = $('#BranchAddress').val();
+            var BranchCity = $('#BranchCity').val(); 
+            var BranchCode = $('#BranchCode').val();
+            var BranchContactNo = $('#BranchContactNo').val();
+            var Added_By = $('#Added_By').val();
+            var Added_Date = $('#Added_Date').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Setting/EditBranch',
+                    data: { "BranchId": BranchId, "BranchName": BranchName, "BranchAddress": BranchAddress, "BranchCity": BranchCity, "BranchCode": BranchCode, "BranchContactNo": BranchContactNo, "Added_By": Added_By, "Added_Date": Added_Date },
+                    success: function (response) {
+                        var Toast = Swal.mixin({ toast: true, position: 'top-end',showConfirmButton: false,progressBar: true,timer: 3000});
+                        Toast.fire({icon: 'success',title: 'Branch Update Successfully..!'})
+                        $('#addupbtn').empty().text('Add Branch');
+                        RefreshPage();
+                    },
+                    failure: function (response) {
+                        $('#result').html(response);
+                    }
+                });
+            }
+            else {
+            var BranchId = $('#BranchId').val();
+            var BranchName = $('#BranchName').val();
+            var BranchAddress = $('#BranchAddress').val();
+            var BranchCity = $('#BranchCity').val();
+            var BranchCode = $('#BranchCode').val();
+            var BranchContactNo = $('#BranchContactNo').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Setting/CreateBranch',
+                    data: {"BranchName": BranchName, "BranchAddress": BranchAddress, "BranchCity": BranchCity, "BranchCode": BranchCode, "BranchContactNo": BranchContactNo},
+                    success: function (response) { 
+                        var Toast = Swal.mixin({ toast: true, position: 'top-end', showConfirmButton: false, progressBar: true, timer: 3000 });
+                        Toast.fire({icon: 'success',title: 'Branch Save Successfully..!'})
+                        RefreshPage();
+                    },
+                    failure: function (response) {
+                        $('#result').html(response);
+                    }
+                });
+            }
+        }
+    function delbranch(BranchId)
+    {
+        Swal.fire({
+            title: 'Are you sure?', 
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({ 
+                    type: 'POST',
+                    url: '/Setting/DeleteBranch', 
+                    data: {
+                        "BranchId": BranchId
+                    },
+                    success: function (response) {
+                        Swal.fire('Deleted!','Your Branch has been deleted.','success')
+                        RefreshPage();
+                    },
+                    failure: function (response) {
+                        $('#result').html(response);
+                    }
+                });
+            }
+        })
+    } 
+    function EditBranch(BranchId, BranchName, BranchCode, BranchAddress, BranchCity, BranchContactNo, Added_By, Added_Date) {
+        $('#BranchId').val(BranchId); 
+        $('#BranchName').val(BranchName); 
+        $('#BranchCode').val(BranchCode);
+        $('#BranchAddress').val(BranchAddress);
+        $('#BranchCity').val(BranchCity);
+        $('#BranchContactNo').val(BranchContactNo);
+        $('#Added_By').val(Added_By);
+        $('#Added_Date').val(Added_Date);
+        $('#addupbtn').empty().text('Update');
+    }
+    </script>
+
