@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRM.Migrations
 {
     [DbContext(typeof(CRMContext))]
-    [Migration("20220108103540_forth")]
-    partial class forth
+    [Migration("20220122120246_t")]
+    partial class t
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,45 @@ namespace CRM.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CRM.Model.CRMModel.Branch", b =>
+                {
+                    b.Property<int>("BranchId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Added_By")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Added_Date")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchCity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchContactNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Modified_By")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Modified_Date")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BranchId");
+
+                    b.ToTable("branch");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -227,11 +266,35 @@ namespace CRM.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("ConfirmPassword")
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Branch")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CNIC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("CNIC_Back_Image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("CNIC_Front_Image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Emergency_Contact")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("House_Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Joining_Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LanguageId")
                         .HasColumnType("nvarchar(max)");
@@ -239,8 +302,23 @@ namespace CRM.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Latitude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Longitude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Personal_Mobile")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("ProfilePicture")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UsernameChangeLimit")
                         .HasColumnType("int");
