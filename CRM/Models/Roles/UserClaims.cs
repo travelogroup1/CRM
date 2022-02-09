@@ -23,7 +23,7 @@ namespace CRM.Models
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
         {
             var identity = await base.GenerateClaimsAsync(user);
-            identity.AddClaim(new Claim("FirstName", user.FirstName ?? ""));
+            identity.AddClaim(new Claim("FullName", user.FullName ?? ""));
             return identity;
         }
     }

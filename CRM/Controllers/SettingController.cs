@@ -47,7 +47,7 @@ namespace CRM.Controllers
                 BranchCode = BranchCode,
                 BranchContactNo = BranchContactNo
             };
-            branchModel.Added_By = GetCurrentUserAsync()?.Result.FirstName + " " + GetCurrentUserAsync()?.Result.LastName;
+            branchModel.Added_By = GetCurrentUserAsync()?.Result.FullName;
             branchModel.Added_Date = Convert.ToString(DateTime.Now);
             _context.Add(branchModel);   
             _context.SaveChanges();  
@@ -67,7 +67,7 @@ namespace CRM.Controllers
                 Added_By = Added_By,
                 Added_Date = Added_Date
             };
-            branchModel.Modified_By = GetCurrentUserAsync()?.Result.FirstName + " " + GetCurrentUserAsync()?.Result.LastName;
+            branchModel.Modified_By = GetCurrentUserAsync()?.Result.FullName;
             branchModel.Modified_Date = Convert.ToString(DateTime.Now);
             _context.Update(branchModel);
             _context.SaveChanges();
@@ -85,6 +85,7 @@ namespace CRM.Controllers
             return Json(true); 
         }
         #endregion
+      
     }
 }
  

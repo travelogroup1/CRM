@@ -74,8 +74,8 @@ namespace CRM.Controllers
             }
             ApplicationUser userdata = await _userManager.FindByIdAsync(userId);
             userdata.UserName = applicationUser.UserName;
-            userdata.FirstName = applicationUser.FirstName;
-            userdata.LastName = applicationUser.LastName;
+            userdata.FullName = applicationUser.FullName;
+          
             userdata.ProfilePicture = applicationUser.ProfilePicture;
             userdata.Email = applicationUser.Email;
             var result = await _userManager.UpdateAsync(userdata);
@@ -106,8 +106,8 @@ namespace CRM.Controllers
                 var thisViewModel = new RoleAsignToUser();
                 thisViewModel.UserId = user.Id;
                 thisViewModel.Email = user.Email;
-                thisViewModel.FirstName = user.FirstName;
-                thisViewModel.LastName = user.LastName;
+                thisViewModel.FullName= user.FullName;
+                thisViewModel.UserName = user.UserName;
                 thisViewModel.Roles = await GetUserRoles(user);
                 userRolesViewModel.Add(thisViewModel);
             }

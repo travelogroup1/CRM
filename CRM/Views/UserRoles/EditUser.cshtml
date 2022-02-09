@@ -14,23 +14,15 @@
 <div asp-validation-summary="All" class="text-danger"></div>
                 <input type="hidden" value="@Model.Id" />
                                 <div class="input-group mb-3">
-                                    <input asp-for="FirstName" class="form-control" placeholder="Enter First Name..!" /><br />
-                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    <input asp-for="FullName" class="form-control" placeholder="Enter Full  Name..!" /><br />
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <span class="fas fa-user"></span>
                                         </div>
                                     </div>
                                 </div>
-                                                <div class="input-group mb-3">
-                                                    <input asp-for="LastName" class="form-control" placeholder="Enter last Name..!" /><br />
-                                                    <span asp-validation-for="LastName" class="text-danger"></span>
-                                                    <div class="input-group-append">
-                                                        <div class="input-group-text">
-                                                            <span class="fas fa-envelope"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                              
                                                                 <div class="input-group mb-3">
                                                                     <input asp-for="UserName" class="form-control" placeholder="Enter user Name..!" /><br />
                                                                     <span asp-validation-for="UserName" class="text-danger"></span>

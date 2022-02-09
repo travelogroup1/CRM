@@ -10,8 +10,8 @@
     <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="input-group mb-3">
-            <input asp-for="Input.FirstName" class="form-control" placeholder="Enter First Name..!" /><br />
-            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            <input asp-for="Input.FullName" class="form-control" placeholder="Enter First Name..!" /><br />
+            <span asp-validation-for="Input.FullName" class="text-danger"></span>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-user"></span>
@@ -19,8 +19,8 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <input asp-for="Input.LastName" class="form-control" placeholder="Enter last Name..!" /><br />
-            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            <input asp-for="Input.UserName" class="form-control" placeholder="Enter last Name..!" /><br />
+            <span asp-validation-for="Input.UserName" class="text-danger"></span>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-envelope"></span>

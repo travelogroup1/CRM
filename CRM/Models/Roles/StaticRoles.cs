@@ -43,10 +43,11 @@ namespace CRM.Models
             {
                 UserName = "superadmin",
                 Email = "superadmin@gmail.com",
-                FirstName = "awais",
-                LastName = "ali",
+                FullName = "awais",
+              
                 EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                PhoneNumberConfirmed = true,
+                IsDeleted=0
             };
             if (userManager.Users.All(u => u.Id != defaultUser.Id))
             {
@@ -95,5 +96,5 @@ namespace CRM.Models
             }
         }
     }
-  
+
 }

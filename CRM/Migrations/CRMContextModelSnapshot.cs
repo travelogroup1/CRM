@@ -264,13 +264,28 @@ namespace CRM.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<string>("Added_By")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Added_Date")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Branch")
+                    b.Property<string>("AgreementFilePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Branch")
+                        .HasColumnType("int");
+
                     b.Property<string>("CNIC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CNICBackBase64")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CNICFrontBase64")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("CNIC_Back_Image")
@@ -285,11 +300,14 @@ namespace CRM.Migrations
                     b.Property<string>("Emergency_Contact")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("House_Location")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IsDeleted")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Joining_Date")
                         .HasColumnType("datetime2");
@@ -297,19 +315,19 @@ namespace CRM.Migrations
                     b.Property<string>("LanguageId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Modified_By")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Latitude")
+                    b.Property<string>("Modified_Date")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Longitude")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mobile")
+                    b.Property<string>("OfficialMobile")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Personal_Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileBase64")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("ProfilePicture")

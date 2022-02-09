@@ -51,12 +51,12 @@ namespace CRM.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            [Display(Name = "Full Name")]
+            public string FullName { get; set; }
 
             [Required]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
+            [Display(Name = "User Name")]
+            public string UserName { get; set; }
             [Display(Name = "Profile Picture")]
             public byte[] ProfilePicture { get; set; }
             [Required]
@@ -95,8 +95,8 @@ namespace CRM.Areas.Identity.Pages.Account
                 {
                     UserName = userName,
                     Email = Input.Email,
-                    FirstName = Input.FirstName,
-                    LastName = Input.LastName,
+                    FullName = Input.FullName,
+
                     ProfilePicture = Input.ProfilePicture
                 };
 

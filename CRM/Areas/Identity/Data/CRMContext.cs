@@ -16,8 +16,9 @@ namespace CRM.Data
             : base(options)
         {
         }
+        // entities
         public DbSet<ApplicationUser> applicationUsers { get; set; }
-        public DbSet<Branch> branch { get; set; } 
+        public DbSet<Branch> branch { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
